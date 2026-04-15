@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module de Connexion</title>
+    
+    <!-- 
+        <script defer src="./index.js"></script>
+    --> 
+   
+    <script defer src="./index-formdata.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Connexion</h1>
+    <form action="" method="POST">
+        <label for="email">Courriel :</label>
+        <input type="text" id="email" name="email" required>
+
+        <label for="mdp">Mot de passe :</label>
+        <input type="password" id="mdp" name="mdp" required>
+
+        <button id='submit-input' type="submit">Se connecter</button>
+    </form>
+
+    <button id="get-cat">One cat</button>
+    <button id="get-cats">Raining cats</button>
+    
+    <button id="get-allUsers">Get All User</button>
+
+    <div id="cats-container"></div>
+</body>
+</html>
+
