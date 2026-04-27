@@ -1,6 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
 import { postUserData, displayRandomCats } from './index.js';
 
-// Mock global de fetch pour isoler les tests (Bloc 2 - E14)
 global.fetch = jest.fn();
 
 describe('Suite de Tests Unitaires - Bloc 2 (Front-end)', () => {
@@ -14,11 +16,12 @@ describe('Suite de Tests Unitaires - Bloc 2 (Front-end)', () => {
             json: () => Promise.resolve({ status: 'success', message: 'User OK' })
         });
 
-        const email = 'mohamed@test.fr';
+        const email = 'totoLeBoss@test.fr';
         const mdp = 'secu123';
         const result = await postUserData(email, mdp);
 
-        expect(fetch).toHaveBeenCalledWith('./traitement-json.php', expect.objectContaining({
+        // ON MET À JOUR L'URL ICI : ../back/traitement-json.php
+        expect(fetch).toHaveBeenCalledWith('../back/traitement-json.php', expect.objectContaining({
             method: 'POST',
             body: JSON.stringify({ email, password: mdp })
         }));
