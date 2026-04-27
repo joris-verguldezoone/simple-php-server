@@ -11,8 +11,7 @@ let catContainer = document.getElementById("cats-container")
 
 
 submit.addEventListener('click',async (event)=>{
-    event.preventDefault();
-    console.log("coucou")
+    event.preventDefault(); 
     console.log(mail.value)
     console.log(mdp.value)
 
