@@ -25,4 +25,4 @@ jobs:
 
       - name: Trigger Plesk Webhook
         if: success()
-        run: curl -X POST "${{ secrets.PLESK_WEBHOOK_URL }}"
+        run: curl -X POST "${{ secrets.PLESK_WEBHOOK_URL }}" 
