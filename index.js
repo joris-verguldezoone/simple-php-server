@@ -1,73 +1,52 @@
-let mail = document.getElementById('email');
-let mdp = document.getElementById('mdp');
-
-let submit = document.getElementById("submit-input");
-
-let getCat = document.getElementById('get-cat');
-let getCats = document.getElementById('get-cats');
-let getAllUsers = document.getElementById('get-allUsers')
-
-let catContainer = document.getElementById("cats-container")
-
-
-submit.addEventListener('click',async (event)=>{
-    event.preventDefault(); 
-    console.log(mail.value)
-    console.log(mdp.value)
-
+// Fonctions exportées pour être testables (Bloc 2 - C16, C17)
+export async function postUserData(email, password) {
     const response = await fetch('./traitement-json.php', {
         headers: {
             "Content-Type": "application/json",
         },
-        method:"POST",
-        body: JSON.stringify({ email: mail.value, password: mdp.value })
-        
-    })
-
-    let result = await response.json()
-    console.log(result)
-})
-
-getCat.addEventListener('click', async ()=>{
-    const result = await displayRandomCat();
-    catContainer.innerHTML = '';
-
-     const newImg = document.createElement('img');        
-        newImg.src = result.url;
-        newImg.className = "cat-image";
-        catContainer.append(newImg);
-})
-
-getCats.addEventListener('click', async ()=>{
-    const result = await displayRandomCats();
-    catContainer.innerHTML = '';
-    console.log(result,'result')
-
-    result.forEach(element => {
-        const newImg = document.createElement('img');        
-        newImg.src = element.url;
-        newImg.className = "cat-image";
-        catContainer.append(newImg);
+        method: "POST",
+        body: JSON.stringify({ email, password })
     });
-    
-})
-
-
-async function displayRandomCat(){
-      const response = await fetch("https://api.thecatapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=1")
-
-    const result = await response.json()
-    console.log(result)
-    return result[0]
-
+    return await response.json();
 }
 
-async function displayRandomCats(){
-      const response = await fetch("https://api.thecatapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=10")
+export async function displayRandomCats(limit = 1) {
+    const response = await fetch(`https://api.thecatapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=${limit}`);
+    return await response.json();
+}
 
-    const result = await response.json()
-    console.log(result)
+// Initialisation des écouteurs d'événements
+export function initApp() {
+    const submit = document.getElementById("submit-input");
+    const getCat = document.getElementById('get-cat');
+    const getCats = document.getElementById('get-cats');
+    const catContainer = document.getElementById("cats-container");
 
-    return result
+    if (submit) {
+        submit.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const mail = document.getElementById('email').value;
+            const mdp = document.getElementById('mdp').value;
+            const result = await postUserData(mail, mdp);
+            console.log(result);
+        });
+    }
 
+    if (getCat) {
+        getCat.addEventListener('click', async () => {
+            const result = await displayRandomCats(1);
+            if (catContainer) {
+                catContainer.innerHTML = '';
+                const newImg = document.createElement('img');
+                newImg.src = result[0].url;
+                newImg.className = "cat-image";
+                catContainer.append(newImg);
+            }
+        });
+    }
+}
+
+// Lancement automatique si on est dans le navigateur
+if (typeof window !== 'undefined') {
+    initApp();
 }

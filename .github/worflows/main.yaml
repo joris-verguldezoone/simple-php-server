@@ -1,0 +1,28 @@
+name: CI-CD demo
+
+on:
+  push:
+    branches: [ cicd_plesk ]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js Dependencies
+        run: npm install
+
+      - name: Run Jest Tests (Assurance Qualité)
+        run: npm test
+
+      - name: Check Plesk Connectivity
+        run: |
+          curl -I --connect-timeout 5 ${{ secrets.PLESK_DOMAIN_URL }} || exit 1
+
+
+      - name: Trigger Plesk Webhook
+        if: success()
+        run: curl -X POST "${{ secrets.PLESK_WEBHOOK_URL }}"
