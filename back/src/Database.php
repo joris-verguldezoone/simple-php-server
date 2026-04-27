@@ -1,5 +1,7 @@
 <?php
 
+namespace Database;
+
 class Database {
     // private $pdo;
     //property
@@ -12,11 +14,11 @@ class Database {
         $user = $_ENV['DB_USER'];
         $pass = $_ENV['DB_PASS'];
 
-        $this->pdo = new PDO(
+        $this->pdo = new \PDO(
             "mysql:host=$host;dbname=$db;charset=utf8",
             $user,
             $pass,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]
         );
     }
 

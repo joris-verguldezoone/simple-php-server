@@ -1,14 +1,16 @@
 <?php
-require_once 'Database.php';
+
+namespace User;
+use Database\Database;
 
 class User extends Database {
 
     public function signin($email, $password){
         try {
             $query = $this->pdo->prepare("SELECT * FROM user WHERE email = :email");
-            $query->bindValue(':email', $email, PDO::PARAM_STR);
+            $query->bindValue(':email', $email, \PDO::PARAM_STR);
             $query->execute();
-            $result = $query->fetch(PDO::FETCH_ASSOC);
+            $result = $query->fetch(\PDO::FETCH_ASSOC);
             // var_dump($result);
             if(count($result) > 0){    
                 if(password_verify($password,$result['password'])){
@@ -32,10 +34,10 @@ class User extends Database {
         try {
 
             $query = $this->pdo->prepare("INSERT INTO user (email, firstname, lastname, password) VALUES (:email, :firstname, :lastname, :password)");
-            $query->bindValue(':email', $user['email'], PDO::PARAM_STR);
-            $query->bindValue(':firstname', $user['firstname'], PDO::PARAM_STR);
-            $query->bindValue(':lastname', $user['lastname'], PDO::PARAM_STR);
-            $query->bindValue(':password', $user['password'], PDO::PARAM_STR);
+            $query->bindValue(':email', $user['email'], \PDO::PARAM_STR);
+            $query->bindValue(':firstname', $user['firstname'], \PDO::PARAM_STR);
+            $query->bindValue(':lastname', $user['lastname'], \PDO::PARAM_STR);
+            $query->bindValue(':password', $user['password'], \PDO::PARAM_STR);
             $query->execute();
         } catch (\Throwable $th) {
             throw $th;
@@ -47,7 +49,7 @@ class User extends Database {
         try {
             $query = $this->pdo->prepare("SELECT * FROM user");
             $query->execute();
-            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            $result = $query->fetchAll(\PDO::FETCH_ASSOC);
 
             return $result;
         } catch (\Throwable $th) {
