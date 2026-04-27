@@ -57,11 +57,6 @@ class User extends Database {
         }
 
     }
-
-
-
-    
-
 }
 
 ?>
