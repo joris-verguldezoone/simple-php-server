@@ -7,8 +7,17 @@ class Database {
     // method 
     public function __construct()
     {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=simple-php-server;charset=utf8','hardjojo','hardjojo');
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $host = $_ENV['DB_HOST'];
+        $db   = $_ENV['DB_NAME'];
+        $user = $_ENV['DB_USER'];
+        $pass = $_ENV['DB_PASS'];
+
+        $this->pdo = new PDO(
+            "mysql:host=$host;dbname=$db;charset=utf8",
+            $user,
+            $pass,
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        );
     }
 
     // public function getPdo(){ // si c'est en privé j'utilise le getter dans l'enfant 

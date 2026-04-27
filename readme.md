@@ -1,0 +1,1 @@
+utilisation de composer require vlucas/phpdotenv et de jest
